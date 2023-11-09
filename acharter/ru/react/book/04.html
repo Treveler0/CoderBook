@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/read.css" />
+    <title>Coder Book menu</title>
+    <script type="text/javascript" src="../../../../higtline/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../../../../higtline/scripts/shBrushCSharp.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../../../higtline/styles/shCoreDefault.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+    <script src="../../../../js/Hyphenator.js" type="text/javascript"></script>
+</head>
+
+<body id="pageBody" class="hyphenate">
+
+<!-- progress bar -->
+<script src="../../../../js/progressBar.js" type="text/javascript"></script>
+<div class="Reading-progress" id="progressBarType1"><span id="Progress-bar-top" class="bar-top" style="display: block !important;"></span></div>
+<div class="Reading-progress" id="progressBarType2"><span id="Progress-bar-bottom" class="bar-bottom"></span></div>
+<div class="Reading-progress" id="progressBarType3"><span id="Progress-bar-left" class="bar-left"></span></div>
+<div class="Reading-progress" id="progressBarType4"><span id="Progress-bar-right" class="bar-right"></span></div>
+<!-- progress bar -->
+
+
+    <div id="lesonPage">
+
+        <div id="lessMenu">
+           <a id="exitLess" href="list.html" ontouchstart="return true;"><img src="../../../../img/menu/ex.png" /></a>
+           <div id="aaLess" ontouchstart="return true;" onclick="OpenSettMenu();"><img src="../../../../img/menu/aa.png" /></div>
+           <div id="subMenuInLess" style="display: none;">
+                <a href="../../../../menu/setfontsize-ru.html" ontouchstart="return true;" id="pastMenuInLess">Размер текста</a>
+                <a href="../../../../menu/setcolor-ru.html" ontouchstart="return true;" id="pastMenuInLess">Цветовая темы</a>
+                <a href="../../../../menu/setProgressBar-ru.html" ontouchstart="return true;" id="pastMenuInLess" style="border: none;">Прогресс бар</a>
+           </div>
+           <div id="aaLess" ontouchstart="return true;">
+            <div class="bmEdit" onclick="dellBm();" id="bma958" ontouchstart="return true;" style="display: none;"><img src="../../../../img/menu/bmlessa.png" /></div>
+            <div class="bmEdit" onclick="setzBm();" id="bm958" ontouchstart="return true;" style="display: block;"><img src="../../../../img/menu/bmless.png" /></div>
+           </div>
+        </div>
+
+        <hr />
+
+	<!-- ПОЧАТОК -->
+
+	<h1 id="title">
+		Создание компонента
+	</h1>
+
+	<p>В прошлом разделе, я упомянул, что ReactDOM.render принимает react-компонент (далее буду называть просто "компонент") и DOM-элемент, в который мы хотим "примонтировать" наше приложение.</p>
+	<p>&lt;h1&gt;Hello, world!&lt;/h1&gt; - как ни странно, это примитивный компонент.</p>
+	<p>Пока ничего интересного, но давайте представим такой псевдо-код:</p>
+
+	<pre class="brush: csharp;">
+	var photos = ['images/cat.jpg','images/dog.jpg','images/owl.jpg']
+	
+	ReactDOM.render(
+		&lt;App&gt;
+		&lt;Photos photos=photos /&gt;
+		&lt;LastNews /&gt;
+		&lt;Comments /&gt;
+		&lt;/App&gt;,
+		document.getElementById('root')
+	);
+	</pre>
+
+	<p>Что примечательного в псевдо-коде?</p>
+	<p>Он очень хорошо читается, ведь очевидно, что наше приложение (App) отображает: фото (кошка, собака, сова), новости (какие-нибудь) и комментарии (тоже какие-нибудь).</p>
+	<p>Хочу вас обрадовать. React.js код выглядит практически так же.</p>
+	<p>Он отлично читается, так как деление на компоненты позволяет отлично структурировать код.</p>
+	<p>Давайте создадим примитивный компонент.</p>
+	<p>js/App.js</p>
+
+	<pre class="brush: csharp;">
+		var App = React.createClass(
+		{
+			render: function()
+			{
+				return (
+					&lt;div className=&quot;app&quot;&gt;
+						Всем привет, я компонент App!
+					&lt;/div&gt;
+				);
+			}
+		});
+
+		ReactDOM.render(
+			&lt;App /&gt;,
+			document.getElementById('root')
+		);
+	</pre>
+
+	<p>Посмотрите в браузер, вы увидите разметку, которую мы указали в методе Render, нашего компонента App.</p>
+
+	<img src="reactImg2.jpg" id="image" />
+
+	<p>Конечно, кое-что добавил уже сам реакт, например data-reactid=".0", это нормально.</p>
+	<p>Слово class в javascript является зарезервированным, поэтому внутри JSX синтаксиса необходимо писать className.</p>
+	<p>В ReactDOM.render мы передали целиком наш компонент, без свойств.</p>
+	<p>Запись &lt;App /&gt; эквивалентна &lt;App&gt;&lt;/App&gt;.</p>
+	<p>Итого: у нас есть компонент &lt;App /&gt;</p>
+	<p>Давайте разовьем идею, и добавим что-нибудь внутрь App, и отобразим это как ни в чем не бывало.</p>
+	<p>js/App.js</p>
+
+	<pre class="brush: csharp;">
+	var News = React.createClass(
+	{
+		render: function()
+		{
+			return (
+				&lt;div className=&quot;news&quot;&gt;
+					К сожалению, новостей нет.
+				&lt;/div&gt;
+			);
+		}
+	});
+
+	var App = React.createClass(
+	{
+		render: function()
+		{
+			return (
+				&lt;div className=&quot;app&quot;&gt;
+					Всем привет, я компонент App! Я умею отображать новости.
+					&lt;News /&gt;
+				&lt;/div&gt;
+			);
+		}
+	});
+
+	ReactDOM.render(
+		&lt;App /&gt;,
+		document.getElementById('root')
+	);
+	</pre>
+
+	<p>Давайте, вновь взглянем на код и поищем примечательные места.</p>
+	<p>Во-первых - мы никак не изменили код внутри ReactDOM.render.</p>
+	<p>Компонент &lt;App /&gt;, содержит сейчас в себе другой компонент.</p>
+	<p>Но при этом, это никак не влияет на "рендер" всего нашего приложения.</p>
+	<p>Во-вторых, как уже было сказано - компонент &lt;App /&gt; содержит в себе компонент &lt;News /&gt;.</p>
+	<p>Да-да!</p>
+	<p>Так же, как если бы это был просто дочерний &lt;div&gt;&lt;/div&gt; элемент.</p>
+	<p>В-третьих, наш компонент &lt;News /&gt; такой же примитивный, как и App, и содержит всего один (обязательный!) метод render.</p>
+	<p>Задачка на понимание происходящего: создайте компонент &lt;Comments /&gt; и сделайте, чтобы он отображался после новостей.</p>
+	<p>Текст компонента: "Нет новостей - комментировать нечего."</p>
+	<p>Решение для задачи всегда публикуется ниже по тексту, и обычно содержит сначала подсказки, а потом код всего решения.</p>
+	<p>Решение:</p>
+	<p>js/App.js</p>
+
+	<pre class="brush: csharp;">
+	var News = React.createClass(
+	{
+		render: function()
+		{
+			return (
+				&lt;div className=&quot;news&quot;&gt;
+					К сожалению, новостей нет.
+				&lt;/div&gt;
+			);
+		}
+	});
+	
+	var Comments = React.createClass(
+	{
+		render: function()
+		{
+			return (
+				&lt;div className=&quot;comments&quot;&gt;
+					Нет новостей - комментировать нечего
+				&lt;/div&gt;
+			);
+		}
+	});
+
+	var App = React.createClass(
+	{
+		render: function()
+		{
+			return (
+				&lt;div className=&quot;app&quot;&gt;
+					Всем привет, я компонент App! Я умею отображать новости.
+				&#x9;&lt;News /&gt;
+				&#x9;&lt;Comments /&gt;
+				&lt;/div&gt;
+			);
+		}
+	});
+
+	ReactDOM.render(
+		&lt;App /&gt;,
+		document.getElementById('root')
+	);
+	</pre>
+
+	<p>Откройте браузер, посмотрите разметку страницы.</p>
+	<p>Все как мы написали + data-react атрибуты.</p>
+	<p>Ощущается некоторое неудобство, при использовании стандартного способа просмотра в консоли.</p>
+	<p>Предлагаю вам установить react devtools (плагин для хрома, плагин для мозилы).</p>
+	<p>После установки, откройте вкладку React в консоли разработчика. </p>
+
+	<img src="reactImg3.jpg" id="image" />
+
+	<p>Пытливый читатель уже заметил окошечко "Props".</p>
+	<p>Ок, об этом и поговорим в следующей главе.</p>
+
+	<script src="../../../../js/progressBarSetIni.js" type="text/javascript"></script>
+
+        <div id="lessMenu" style="margin: 30px 0 0 0;">
+            <hr />
+            <a href="03.html"><div id="exitLess" ontouchstart="return true;"><img src="../../../../img/menu/pr.png" /></div></a>
+            <a href="05.html"><div id="aaLess" ontouchstart="return true;"><img src="../../../../img/menu/ne.png" /></div></a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="../../../../cordova.js"></script>
+    <script type="text/javascript" src="../../../../js/global.js"></script>
+    <script type="text/javascript">
+        changeColor();
+        if (localStorage.getItem("fSize") < 1) { fSize = 16; localStorage.setItem("fSize", 16); } else { fSize = localStorage.getItem("fSize"); }
+        document.getElementById("pageBody").style.fontSize = fSize + "px";
+
+        // goBackMenu
+        document.addEventListener("backbutton", goBackMenu, false);
+        function goBackMenu()
+        {
+            window.location.href = 'list.html';
+        }
+
+        function changeColor()
+        {
+            if (localStorage.getItem("colorSheme") <= 1)
+            {
+                document.getElementById("pageBody").style.backgroundColor = localStorage.getItem("#f0f0f0");
+            }
+
+            if (localStorage.getItem("colorSheme") == 2)
+            {
+                document.getElementById("pageBody").style.backgroundColor = localStorage.getItem("#212121");
+                document.getElementById("pageBody").style.color = localStorage.getItem("#efefef");
+            }
+
+            if (localStorage.getItem("colorSheme") == 3)
+            {
+                document.getElementById("pageBody").style.backgroundColor = localStorage.getItem("#efe4d0");
+            }
+        }
+
+        // bm
+        if (localStorage.getItem("arrs") != null)
+        {
+            var arrs = JSON.parse(localStorage.getItem("arrs"));
+        }
+        else
+        {
+            var arrs = [];
+        }
+
+        var names = ["../acharter/ru/react/book/04.html", "Создание компонента", "bm958"];
+
+        function setzBm() { arrs.push(names); localStorage.setItem("arrs", JSON.stringify(arrs)); localStorage.setItem("bm958", 1); RefBms(); }
+
+        window.onload = function() { RefBms(); }
+
+        function RefBms()
+        {
+            if (localStorage.getItem("bm958") == 1) { document.getElementById("bma958").style.display = "block"; document.getElementById("bm958").style.display = "none"; } else { document.getElementById("bma958").style.display = "none"; document.getElementById("bm958").style.display = "block"; }
+        }
+
+        function dellBm() { for (var i = 0; i < arrs.length; i++) { if (arrs[i].indexOf("Создание компонента") == 1) { arrs.splice(i, 1); localStorage.setItem("bm958", 0); RefBms(); localStorage.setItem("arrs", JSON.stringify(arrs)); } } }
+
+        // sub menu
+        var serTimeToClose = 1000;
+        
+        function OpenSettMenu()
+        {
+            document.getElementById("subMenuInLess").style.display = "block";
+            timeToEvAct();
+            serTimeToClose = 1;
+        }
+        
+        function timeToEvAct()
+        {
+            setTimeout(function() { serTimeToClose = 0 }, 100);
+        }
+        
+        window.addEventListener('click', function(e){
+        
+            if (serTimeToClose <= 0)
+            {
+                if (document.getElementById('subMenuInLess').contains(e.target))
+                {
+                    //
+                }
+                else
+                {
+                    document.getElementById("subMenuInLess").style.display = "none";
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>
